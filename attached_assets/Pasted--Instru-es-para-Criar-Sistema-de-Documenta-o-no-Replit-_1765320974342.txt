@@ -1,0 +1,318 @@
+# Instruções para Criar Sistema de Documentação no Replit
+
+## Objetivo
+Criar uma aplicação web de documentação técnica com:
+- Página principal estilo "Support & Documentation" com cards de acesso rápido
+- Sistema de administração para gerenciar documentos
+- Páginas de detalhes para cada documento com imagens e informações técnicas
+- Design moderno com gradientes e efeitos visuais
+
+## Estrutura do Projeto
+
+### 1. Stack Tecnológica
+- **Frontend**: HTML, CSS, JavaScript (Vanilla ou React)
+- **Backend**: Node.js com Express
+- **Banco de Dados**: JSON file ou SQLite (para persistência simples)
+- **Autenticação**: Sistema básico de login para área administrativa
+
+### 2. Estrutura de Arquivos
+```
+/
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   ├── images/
+│   │   └── (imagens dos documentos)
+│   └── index.html
+├── admin/
+│   ├── login.html
+│   ├── dashboard.html
+│   └── admin.css
+├── server.js
+├── database.json
+└── package.json
+```
+
+### 3. Funcionalidades Principais
+
+#### A) Página Principal (index.html)
+- **Hero Section**: 
+  - Fundo com gradiente dark (azul/roxo/preto)
+  - Título "Support & Documentation"
+  - Subtítulo explicativo
+  - Barra de busca centralizada
+
+- **Seção "Quickfind answers"**:
+  - Grid de cards (4 colunas x 2 linhas)
+  - Cada card com: ícone, título, descrição breve
+  - Cards clicáveis que levam às páginas de detalhe
+
+- **Seção "General FAQs"**:
+  - Lista de perguntas frequentes em accordion
+  - Respostas expansíveis
+
+#### B) Página de Detalhes do Documento
+Para cada documento (exemplo: DBADMDES), criar página com:
+
+**Seções obrigatórias**:
+1. **Header com título e breadcrumb**
+2. **Imagem/Diagrama principal**: Exibir a imagem técnica do sistema
+3. **Informações de Conexão**:
+   - Host de Conexão
+   - String de Conexão (Easy Connect)
+   - Porta
+   - Credenciais (com toggle para mostrar/ocultar)
+
+4. **Testes de Conectividade**:
+   - Instruções de DNS
+   - Teste de IP
+   - Comando Ping (com exemplo de código)
+   - Teste Telnet (com exemplo de código)
+
+5. **Configurações Específicas**:
+   - Tenancy
+   - Ambiente
+   - Nível de Criticidade
+   - Tablespaces principais
+
+6. **Sistemas Dependentes**:
+   - Lista de aplicações conectadas
+   - Descrição de cada integração
+
+7. **Procedimentos de Backup/Recovery**:
+   - Método de backup utilizado
+   - Instruções de restore
+   - Mecanismo de failover
+
+#### C) Painel Administrativo
+
+**Login** (admin/login.html):
+- Formulário simples com usuário e senha
+- Validação básica
+
+**Dashboard** (admin/dashboard.html):
+- Lista de todos os documentos cadastrados
+- Botões: Adicionar Novo, Editar, Excluir
+- Preview de cada documento
+
+**Formulário de Documento**:
+Campos necessários:
+```javascript
+{
+  id: "unique-id",
+  title: "Nome do Documento",
+  icon: "emoji ou classe de ícone",
+  shortDescription: "Descrição breve para o card",
+  category: "quickfind ou faq",
+  
+  // Detalhes completos
+  mainImage: "url-da-imagem",
+  connectionInfo: {
+    host: "",
+    port: "",
+    easyConnect: "",
+    username: "",
+    password: ""
+  },
+  
+  connectivityTests: {
+    dns: "",
+    ip: "",
+    pingCommand: "",
+    telnetCommand: ""
+  },
+  
+  configuration: {
+    tenancy: "",
+    environment: "",
+    criticality: "",
+    tablespaces: []
+  },
+  
+  dependentSystems: [
+    { name: "", description: "" }
+  ],
+  
+  backupInfo: {
+    method: "",
+    instructions: "",
+    failover: ""
+  },
+  
+  additionalNotes: ""
+}
+```
+
+### 4. Design e Estilo
+
+#### Paleta de Cores:
+- Background principal: #0a0e27 (dark blue)
+- Gradiente hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+- Cards: #1a1f3a com borda sutil
+- Acentos: #667eea (roxo/azul), #48bb78 (verde), #f6ad55 (laranja)
+- Texto: #e2e8f0 (claro), #a0aec0 (secundário)
+
+#### Efeitos Visuais:
+- Glassmorphism nos cards
+- Hover effects com elevação e brilho
+- Transições suaves (0.3s ease)
+- Box-shadow para profundidade
+- Border-radius: 12px para cards
+
+#### Typography:
+- Fonte: 'Inter' ou 'Poppins' (Google Fonts)
+- Título principal: 48px, bold
+- Títulos de seção: 32px, semibold
+- Cards título: 20px, medium
+- Texto corpo: 16px, regular
+
+### 5. Funcionalidades JavaScript
+
+```javascript
+// Exemplos de funções necessárias
+
+// Carregar documentos da API
+async function loadDocuments() {
+  const response = await fetch('/api/documents');
+  const docs = await response.json();
+  renderCards(docs);
+}
+
+// Renderizar cards
+function renderCards(documents) {
+  // Criar HTML dinamicamente
+}
+
+// Busca em tempo real
+function searchDocuments(query) {
+  // Filtrar e exibir resultados
+}
+
+// Toggle de senha/credenciais
+function togglePassword() {
+  // Mostrar/ocultar senha
+}
+
+// Copiar código para clipboard
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text);
+}
+```
+
+### 6. API Endpoints (Backend)
+
+```javascript
+// GET /api/documents - Listar todos
+// GET /api/documents/:id - Detalhes de um documento
+// POST /api/documents - Criar novo (requer auth)
+// PUT /api/documents/:id - Atualizar (requer auth)
+// DELETE /api/documents/:id - Deletar (requer auth)
+// POST /api/auth/login - Login admin
+```
+
+### 7. Recursos Extras Recomendados
+
+- **Syntax highlighting**: Para exibir comandos (use Prism.js ou highlight.js)
+- **Copy button**: Em todos os códigos/comandos
+- **Dark/Light mode**: Toggle opcional
+- **Responsividade**: Mobile-first design
+- **Loading states**: Skeleton screens
+- **Toast notifications**: Para ações de admin
+- **Export PDF**: Para documentos individuais
+
+### 8. Exemplo de Implementação Inicial
+
+**Começar com**:
+1. Criar estrutura HTML da página principal
+2. Adicionar CSS com gradientes e cards
+3. Implementar servidor Express básico
+4. Criar arquivo JSON com 2-3 documentos de exemplo
+5. Conectar frontend ao backend
+6. Adicionar página de detalhes dinâmica
+7. Implementar painel administrativo
+8. Adicionar autenticação
+
+### 9. Dados de Exemplo (DBADMDES)
+
+```json
+{
+  "id": "dbadmdes",
+  "title": "DBADMDES - Database Principal",
+  "icon": "🗄️",
+  "shortDescription": "Banco de dados Oracle hospedado em Azure para gestão administrativa",
+  "category": "database",
+  "mainImage": "/images/dbadmdes-diagram.png",
+  "connectionInfo": {
+    "host": "devoralcevaes-ejsly-scan.br-atacadao.corp",
+    "port": "1922",
+    "easyConnect": ".../uboumdes_PDD_DBADMDES.paas.oracle.com",
+    "environment": "Desenvolvimento",
+    "criticality": "Nível 1 (Baixo)"
+  },
+  "connectivityTests": {
+    "dns": "nslookup devoralcevaes-ejsly-scan.br-atacadao.corp",
+    "ping": "ping -c 4 devoralcevaes-ejsly-scan.br-atacadao.corp",
+    "telnet": "telnet devoralcevaes-ejsly-scan.br-atacadao.corp 1922",
+    "oci": "oci db database get --database-id <id>"
+  },
+  "configuration": {
+    "tenancy": "carrefourgroup",
+    "infrastructure": "Oracle@Azure",
+    "location": "Brasil Southeast (Vinhedo)",
+    "tablespaces": ["BANC_DATA", "CAIXA_DATA", "CONTABIL_DATA"]
+  },
+  "dependentSystems": [
+    {"name": "intranethmg", "description": "Sistema interno de gestão"},
+    {"name": "srvboletoappdes", "description": "Aplicação de boletos"},
+    {"name": "garantido-api", "description": "API de garantias"},
+    {"name": "dbcomdes", "description": "Base comercial"},
+    {"name": "srvnfe003h", "description": "Servidor de notas fiscais"}
+  ],
+  "backupInfo": {
+    "method": "OCI Backup Automático",
+    "schedule": "Realizado via OCI da organização",
+    "recovery": "A recuperação é feita através do restore do backup"
+  }
+}
+```
+
+### 10. Checklist de Implementação
+
+- [ ] Setup do projeto Node.js + Express
+- [ ] Estrutura HTML da página principal
+- [ ] CSS com design moderno e gradientes
+- [ ] Grid de cards responsivo
+- [ ] Sistema de roteamento para detalhes
+- [ ] Página de detalhes dinâmica
+- [ ] API REST completa
+- [ ] Painel administrativo
+- [ ] Sistema de autenticação
+- [ ] CRUD de documentos
+- [ ] Upload de imagens
+- [ ] Busca funcional
+- [ ] Testes de conectividade formatados
+- [ ] Copy to clipboard
+- [ ] Responsividade mobile
+- [ ] Deploy no Replit
+
+---
+
+## Prompt Sugerido para o Replit Agent
+
+"Crie uma aplicação web de documentação técnica com as seguintes características:
+
+1. **Página Principal**: Design moderno com hero section (gradiente roxo/azul), título "Support & Documentation", barra de busca, e grid de cards 4x2 com ícones e descrições
+
+2. **Sistema Admin**: Painel de administração com login, CRUD completo para gerenciar documentos (título, descrição, imagem, informações técnicas)
+
+3. **Páginas de Detalhes**: Para cada documento, exibir imagem técnica, informações de conexão (host, porta, string), testes de conectividade (DNS, ping, telnet), configurações, sistemas dependentes e procedimentos de backup
+
+4. **Tech Stack**: Node.js + Express no backend, HTML/CSS/JS no frontend, persistência em JSON
+
+5. **Design**: Dark theme (fundo #0a0e27), cards com glassmorphism, hover effects, cores vibrantes (roxo #667eea, verde #48bb78), fonte Inter/Poppins
+
+6. **Features**: Busca em tempo real, copy to clipboard para comandos, syntax highlighting, responsivo
+
+Inclua 2-3 documentos de exemplo com dados de bancos de dados Oracle."
