@@ -14,9 +14,7 @@ import {
   Shield, 
   Activity, 
   Layers, 
-  RotateCcw,
-  Eye,
-  EyeOff
+  RotateCcw
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
@@ -25,7 +23,6 @@ import generatedImage from '@assets/generated_images/technical_architecture_diag
 export default function DocumentDetails() {
   const [, params] = useRoute("/docs/:id");
   const [doc, setDoc] = useState<Document | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
   const [copied, setCopied] = useState("");
 
   useEffect(() => {
@@ -62,7 +59,7 @@ export default function DocumentDetails() {
   return (
     <Layout>
       {/* Breadcrumb Header */}
-      <div className="border-b border-white/10 bg-black/20">
+      <div className="border-b border-border bg-muted/30">
         <div className="container mx-auto px-4 h-14 flex items-center text-sm text-muted-foreground">
           <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <ChevronRight className="w-4 h-4 mx-2" />
@@ -80,11 +77,11 @@ export default function DocumentDetails() {
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-white border border-border flex items-center justify-center text-3xl shadow-sm text-primary">
                 {doc.icon}
               </div>
               <div>
-                <h1 className="text-3xl font-display font-bold">{doc.title}</h1>
+                <h1 className="text-3xl font-display font-bold text-slate-900">{doc.title}</h1>
                 <p className="text-muted-foreground">{doc.shortDescription}</p>
               </div>
             </div>
@@ -106,7 +103,7 @@ export default function DocumentDetails() {
               transition={{ delay: 0.1 }}
               className="glass-card rounded-xl overflow-hidden p-1"
             >
-              <div className="bg-black/40 rounded-lg overflow-hidden aspect-video relative group">
+              <div className="bg-slate-100 rounded-lg overflow-hidden aspect-video relative group">
                 {displayImage ? (
                   <img src={displayImage} alt="System Architecture" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 ) : (
@@ -114,7 +111,7 @@ export default function DocumentDetails() {
                     No diagram available
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
                   <p className="text-white font-medium">System Architecture Diagram</p>
                 </div>
               </div>
@@ -127,31 +124,31 @@ export default function DocumentDetails() {
               transition={{ delay: 0.2 }} 
               className="glass-card rounded-xl p-6"
             >
-              <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2 mb-6 border-b border-border pb-4">
                 <Server className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-semibold">Connection Details</h2>
+                <h2 className="text-xl font-semibold text-slate-900">Connection Details</h2>
               </div>
 
               <div className="grid gap-4">
                 {doc.connectionInfo?.host && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-3 rounded-lg hover:bg-white/5 transition-colors">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-muted-foreground text-sm font-medium">Hostname</span>
                     <div className="md:col-span-2 flex items-center justify-between gap-2">
-                      <code className="bg-black/30 px-2 py-1 rounded text-sm font-mono text-blue-300">{doc.connectionInfo.host}</code>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-white" onClick={() => copyToClipboard(doc.connectionInfo!.host, "Hostname")}>
-                        {copied === "Hostname" ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                      <code className="bg-slate-900 px-2 py-1 rounded text-sm font-mono text-blue-300">{doc.connectionInfo.host}</code>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10" onClick={() => copyToClipboard(doc.connectionInfo!.host, "Hostname")}>
+                        {copied === "Hostname" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                       </Button>
                     </div>
                   </div>
                 )}
 
                 {doc.connectionInfo?.easyConnect && (
-                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-3 rounded-lg hover:bg-white/5 transition-colors">
+                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                    <span className="text-muted-foreground text-sm font-medium">Easy Connect</span>
                    <div className="md:col-span-2 flex items-center justify-between gap-2">
-                     <code className="bg-black/30 px-2 py-1 rounded text-sm font-mono text-purple-300 break-all">{doc.connectionInfo.easyConnect}</code>
-                     <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-white" onClick={() => copyToClipboard(doc.connectionInfo!.easyConnect!, "Easy Connect")}>
-                       {copied === "Easy Connect" ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                     <code className="bg-slate-900 px-2 py-1 rounded text-sm font-mono text-purple-300 break-all">{doc.connectionInfo.easyConnect}</code>
+                     <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10" onClick={() => copyToClipboard(doc.connectionInfo!.easyConnect!, "Easy Connect")}>
+                       {copied === "Easy Connect" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                      </Button>
                    </div>
                  </div>
@@ -166,13 +163,13 @@ export default function DocumentDetails() {
               transition={{ delay: 0.3 }} 
               className="glass-card rounded-xl p-6"
             >
-              <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-4">
-                <Activity className="w-5 h-5 text-green-400" />
-                <h2 className="text-xl font-semibold">Connectivity Tests</h2>
+              <div className="flex items-center gap-2 mb-6 border-b border-border pb-4">
+                <Activity className="w-5 h-5 text-green-500" />
+                <h2 className="text-xl font-semibold text-slate-900">Connectivity Tests</h2>
               </div>
 
               <Tabs defaultValue="ping" className="w-full">
-                <TabsList className="bg-black/30 w-full justify-start mb-4">
+                <TabsList className="bg-muted w-full justify-start mb-4 p-1">
                   <TabsTrigger value="ping">Ping</TabsTrigger>
                   <TabsTrigger value="telnet">Telnet</TabsTrigger>
                   {doc.connectivityTests?.dns && <TabsTrigger value="dns">DNS</TabsTrigger>}
@@ -181,12 +178,12 @@ export default function DocumentDetails() {
                 
                 {Object.entries(doc.connectivityTests || {}).map(([key, value]) => (
                   <TabsContent key={key} value={key} className="mt-0">
-                    <div className="bg-black/50 rounded-lg p-4 border border-white/5 relative group">
+                    <div className="bg-slate-900 rounded-lg p-4 border border-border relative group">
                       <pre className="font-mono text-sm text-green-300 overflow-x-auto whitespace-pre-wrap">{value}</pre>
                       <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/10 hover:bg-white/20"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/10 hover:bg-white/20 text-white"
                         onClick={() => copyToClipboard(value, `${key} command`)}
                       >
                         {copied === `${key} command` ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
@@ -208,26 +205,26 @@ export default function DocumentDetails() {
               className="glass-card rounded-xl p-6"
             >
               <div className="flex items-center gap-2 mb-4">
-                <Shield className="w-5 h-5 text-orange-400" />
-                <h3 className="font-semibold text-lg">Configuration</h3>
+                <Shield className="w-5 h-5 text-orange-500" />
+                <h3 className="font-semibold text-lg text-slate-900">Configuration</h3>
               </div>
               <div className="space-y-4">
                 {doc.configuration?.tenancy && (
                   <div>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">Tenancy</span>
-                    <p className="font-medium">{doc.configuration.tenancy}</p>
+                    <p className="font-medium text-foreground">{doc.configuration.tenancy}</p>
                   </div>
                 )}
                  {doc.configuration?.infrastructure && (
                   <div>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">Infrastructure</span>
-                    <p className="font-medium">{doc.configuration.infrastructure}</p>
+                    <p className="font-medium text-foreground">{doc.configuration.infrastructure}</p>
                   </div>
                 )}
                  {doc.configuration?.location && (
                   <div>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">Location</span>
-                    <p className="font-medium">{doc.configuration.location}</p>
+                    <p className="font-medium text-foreground">{doc.configuration.location}</p>
                   </div>
                 )}
               </div>
@@ -241,15 +238,15 @@ export default function DocumentDetails() {
               className="glass-card rounded-xl p-6"
             >
               <div className="flex items-center gap-2 mb-4">
-                <Layers className="w-5 h-5 text-purple-400" />
-                <h3 className="font-semibold text-lg">Dependent Systems</h3>
+                <Layers className="w-5 h-5 text-purple-500" />
+                <h3 className="font-semibold text-lg text-slate-900">Dependent Systems</h3>
               </div>
               <div className="space-y-3">
                 {doc.dependentSystems?.map((sys, i) => (
-                  <div key={i} className="flex items-start gap-3 p-2 rounded hover:bg-white/5 transition-colors">
+                  <div key={i} className="flex items-start gap-3 p-2 rounded hover:bg-muted/50 transition-colors">
                     <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2" />
                     <div>
-                      <p className="text-sm font-medium">{sys.name}</p>
+                      <p className="text-sm font-medium text-foreground">{sys.name}</p>
                       <p className="text-xs text-muted-foreground">{sys.description}</p>
                     </div>
                   </div>
@@ -265,17 +262,17 @@ export default function DocumentDetails() {
               className="glass-card rounded-xl p-6 border-l-4 border-l-blue-500"
             >
               <div className="flex items-center gap-2 mb-4">
-                <RotateCcw className="w-5 h-5 text-blue-400" />
-                <h3 className="font-semibold text-lg">Backup & Recovery</h3>
+                <RotateCcw className="w-5 h-5 text-blue-500" />
+                <h3 className="font-semibold text-lg text-slate-900">Backup & Recovery</h3>
               </div>
               <div className="space-y-4 text-sm">
                 <div>
                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Method</span>
-                   <p>{doc.backupInfo?.method}</p>
+                   <p className="text-foreground">{doc.backupInfo?.method}</p>
                 </div>
                  <div>
                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Schedule</span>
-                   <p>{doc.backupInfo?.schedule}</p>
+                   <p className="text-foreground">{doc.backupInfo?.schedule}</p>
                 </div>
               </div>
             </motion.div>

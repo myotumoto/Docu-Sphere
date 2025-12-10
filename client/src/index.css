@@ -48,40 +48,40 @@
 }
 
 :root {
-  /* Dark Theme by default as per requirements */
-  --background: 232 60% 10%; /* #0a0e27 */
-  --foreground: 210 40% 98%; /* #e2e8f0 */
+  /* Light Theme - Clean & Modern */
+  --background: 0 0% 100%; /* White */
+  --foreground: 222 47% 11%; /* Slate 900 */
 
-  --card: 231 38% 16%; /* #1a1f3a */
-  --card-foreground: 210 40% 98%;
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 222 47% 11%;
 
-  --popover: 231 38% 16%;
-  --popover-foreground: 210 40% 98%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
 
-  --primary: 229 76% 66%; /* #667eea */
+  --primary: 229 76% 60%; /* Slightly darker/bolder blue for light mode */
   --primary-foreground: 210 40% 98%;
 
-  --secondary: 215 25% 27%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11.2%;
 
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215 16% 47%;
 
-  --accent: 230 40% 25%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222 47% 11.2%;
 
-  --destructive: 0 62% 30%;
+  --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
 
-  --border: 217 33% 20%;
-  --input: 217 33% 17%;
-  --ring: 229 76% 66%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 229 76% 60%;
 
   --radius: 0.75rem;
 
-  --chart-1: 229 76% 66%;
-  --chart-2: 145 46% 51%; /* #48bb78 */
-  --chart-3: 32 90% 65%;  /* #f6ad55 */
+  --chart-1: 229 76% 60%;
+  --chart-2: 145 46% 45%;
+  --chart-3: 32 90% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
 }
@@ -95,13 +95,13 @@
   }
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism Utilities - Adapted for Light Mode */
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+    @apply bg-white/80 backdrop-blur-md border border-slate-200/50;
   }
   .glass-card {
-    @apply bg-[#1a1f3a]/80 backdrop-blur-md border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-white backdrop-blur-md border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300;
   }
   .text-gradient {
     @apply bg-clip-text text-transparent bg-linear-to-r from-[#667eea] to-[#764ba2];
